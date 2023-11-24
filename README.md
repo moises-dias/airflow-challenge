@@ -9,6 +9,7 @@ This README provides an overview of the data pipeline developed using Python to 
 1. [Operators](#operators)
 2. [Table Modeling](#table-modeling)
 3. [Parameters](#parameters)
+4. [Email Notification](#email-notification)
 4. [Error Handling](#error-handling)
 5. [Setup](#setup)
 
