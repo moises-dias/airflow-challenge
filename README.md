@@ -53,7 +53,7 @@ When the DAG finishes its execution, all the emails specified in the Airflow var
 
 ### Error Handling
 
-All the operators have a retry mechanism to handle transient errors. Additionally, in the event of execution failure, the operators will send email notifications. The "persist data" step also validates the API request result structure to ensure consistency with the predefined table schema, preventing incorrect data from being inserted into the tables.
+All the operators have a retry mechanism to handle transient errors. Additionally, in the event of execution failure, the operators will send email notifications to all the emails specified in the Airflow variable `email_on_failure`. The "persist data" step also validates the API request result structure to ensure consistency with the predefined table schema, preventing incorrect data from being inserted into the tables.
 
 Here is an example of the error message when the API request result structure is not the expected:
 
