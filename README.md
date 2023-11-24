@@ -37,6 +37,14 @@ The second table, **`metadata_table`**, is necessary because in cases where we n
 
 The decision to use two tables (data_table and metadata_table) was made to avoid data redundancy. For instance, assuming a request may return 1000 rows with 10kB of metadata, we prevent repeating this 10kB of metadata for each row, resulting in 10MB of redundant data. Instead, we write this metadata once and use the metadata_id field to link the data to its corresponding metadata.
 
+
+### Parameters
+
+All the parameters used in the DAG, such as the API URL, email addresses and database credentials are stored in Airflow variables. This way, they can be changed without needing to modify the code.
+
+![Variables](variables.png)
+
+
 ### Email notification
 
 When the DAG finishes its execution, all the emails specified in the Airflow variable `email_on_success` will receive a message containing relevant information about the execution:
