@@ -27,18 +27,29 @@ This README provides an overview of the data pipeline developed using Python to 
     Sends an email to stakeholders with relevant information.
 
 ### Table Modeling
+![Tables structure](tables.png)
 
-The expected JSON structure has two keys: `data` which contains a list of objects representing with the keys `id`, `name`, `age` and `city`. And `metadata`, containing the additional request information `timestamp` and `source`.
+The expected JSON structure has two keys: `data` which contains a list of objects representing with the keys `id`, `name`, `age` and `city`. And `metadata`, containing additional request information such as `timestamp`, `source` and any other fields that may be included.
 
-Based on this structure, two tables were created: **`data_table`**, with the columns `id`, `name`, `age`, `city` and `metadata_id`. And also **`metadata_table`**, with the columns `metadata_id` and `metadata`. 
+Based on this structure, two tables were created: **`data_table`**, with the columns `id`, `name`, `age`, `city` and `metadata_id`. And also **`metadata_table`**, with the columns `metadata_id` and `metadata`. The type of the column `metadata` is JSON because the number of fields inside it can change in different requests.
 
 The second table, **`metadata_table`**, is necessary because in cases where we need to locate the source or date due to errors, inconsistencies or auditioning, these informations (load date and source) are very important and should be available.
 
+The decision to use two tables (data_table and metadata_table) was made to avoid data redundancy. For instance, assuming a request may return 1000 rows with 10kB of metadata, we prevent repeating this 10kB of metadata for each row, resulting in 10MB of redundant data. Instead, we write this metadata once and use the metadata_id field to link the data to its corresponding metadata.
+
+### Email notification
+
+When the DAG finishes its execution, all the emails specified in the Airflow variable `email_on_success` will receive a message containing relevant information about the execution:
+
+![Email message](email.png)
 
 ### Error Handling
 
-All the operators have a retry mechanism to handle transient errors. Additionally, in the event of execution failure, all operators will send email notifications. The "persist data" step also validates the API request result to ensure consistency with the predefined table schema, preventing incorrect data from being inserted into the tables.
+All the operators have a retry mechanism to handle transient errors. Additionally, in the event of execution failure, the operators will send email notifications. The "persist data" step also validates the API request result structure to ensure consistency with the predefined table schema, preventing incorrect data from being inserted into the tables.
 
+Here is an example of the message when the API request result structure is not the expected:
+
+![Error message](error.png)
 
 ### Setup
 
@@ -55,7 +66,7 @@ This DAG was tested in Airflow v2.7.3. For running this DAG you need to configur
     - `postgres_database`
 
 
-Inside the Postgres database that you will connect to using the credentials stored in Airflow Variables, you need to create two tables as follows:
+Inside the Postgres database that you will connect using the credentials stored in Airflow Variables, you need to create two tables as follows:
 
 ```
 CREATE TABLE data_table (

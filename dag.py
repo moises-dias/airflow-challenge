@@ -18,7 +18,7 @@ def request_data_from_api(endpoint, file_path):
     result = response.json()
 
     with open(file_path, "w") as file:
-        json.dump(result, file, indent=4, ensure_ascii=False)
+        json.dump(result, file, indent=4)
 
 def persist_data_from_api(postgres_parameters, file_path):
 
