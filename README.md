@@ -42,7 +42,7 @@ All the operators have a retry mechanism to handle transient errors. Additionall
 
 ### Setup
 
-This DAG was tested in Airflow v2.7.3. For running this DAG you only need to configure an email in `airflow.cfg` to send the notifications. And create the following Airflow variables:
+This DAG was tested in Airflow v2.7.3. For running this DAG you need to configure an email in `airflow.cfg` to send the notifications. And create the following Airflow variables:
 
 - `email_on_failure`: Comma separated emails to be informed if one or more tasks fails.
 - `email_on_success`: Comma separated emails to be informed when the pipeline finish its execution.
@@ -54,3 +54,20 @@ This DAG was tested in Airflow v2.7.3. For running this DAG you only need to con
     - `postgres_port`
     - `postgres_database`
 
+
+Inside the Postgres database that you will connect to using the credentials stored in Airflow Variables, you need to create two tables as follows:
+
+```
+CREATE TABLE data_table (
+    id INT,
+    name VARCHAR(50),
+    age INT,
+    city VARCHAR(50),
+    metadata_id UUID
+);
+
+CREATE TABLE metadata_table (
+    metadata_id UUID,
+    metadata JSON
+);
+```
