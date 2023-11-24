@@ -2,9 +2,17 @@
 
 ### Overview
 
-This README provides an overview of the data pipeline developed using Python to retrieve data from an API, store it in a PostgreSQL database, and send notifications via email after the execution finishes. The pipeline consists of five operators:
+This README provides an overview of the data pipeline developed using Python to retrieve data from an API, store it in a PostgreSQL database, and send notifications via email after the execution finishes.
 
-#### Operators
+
+### Table of Contents
+1. [Operators](#operators)
+2. [Table Modeling](#table-modeling)
+3. [Parameters](#parameters)
+4. [Error Handling](#error-handling)
+5. [Setup](#setup)
+
+### Operators
 
 1. **check_api_availability (HttpSensor)**
 

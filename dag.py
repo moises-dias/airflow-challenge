@@ -1,3 +1,6 @@
+# Link to the repository with detailed explanations:
+# https://github.com/moises-dias/airflow-challenge
+
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.email_operator import EmailOperator
