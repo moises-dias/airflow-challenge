@@ -47,13 +47,13 @@ When the DAG finishes its execution, all the emails specified in the Airflow var
 
 All the operators have a retry mechanism to handle transient errors. Additionally, in the event of execution failure, the operators will send email notifications. The "persist data" step also validates the API request result structure to ensure consistency with the predefined table schema, preventing incorrect data from being inserted into the tables.
 
-Here is an example of the message when the API request result structure is not the expected:
+Here is an example of the error message when the API request result structure is not the expected:
 
 ![Error message](error.png)
 
 ### Setup
 
-This DAG was tested in Airflow v2.7.3. For running this DAG you need to configure an email in `airflow.cfg` to send the notifications. And create the following Airflow variables:
+This DAG was tested in an **Ubuntu 22.04 with Python v3.10.12, PostgreSQL v14.9 and Airflow v2.7.3**. For running this DAG you need to configure an email in `airflow.cfg` to send the notifications. And create the following Airflow variables:
 
 - `email_on_failure`: Comma separated emails to be informed if one or more tasks fails.
 - `email_on_success`: Comma separated emails to be informed when the pipeline finish its execution.
